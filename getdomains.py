@@ -66,7 +66,7 @@ def get_title(domain):
       pass
   
     
-class GetUrlThread(threading.Thread):
+class GetTitleThread(threading.Thread):
   def __init__(self,queue):
     threading.Thread.__init__(self)
     self.queue = queue
@@ -90,7 +90,7 @@ def main():
   num = len(domains)
   
   for i in range(5):
-    t = GetUrlThread(queue)
+    t = GetTitleThread(queue)
     t.setDaemon(True)
     t.start()
     
