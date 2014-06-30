@@ -37,19 +37,22 @@ class GetDomain():
     print "正在获取域名，请稍后......"
     print "按 ctrl+c 退出程序"
     domains = []
-    url = "http://dns.aizhan.com/index.php?r=index/domains&ip=%s&page=1" % (ip)
-    r = requests.get(url,timeout = 5)
-    r.close()
-    domains = (r.json()["domains"])
-    maxpage = r.json()["maxpage"]
-    if maxpage >= 2:
-        for i in range(2,maxpage+1):
-          url = "http://dns.aizhan.com/index.php?r=index/domains&ip=%s&page=%d" % (ip,i)
-          r = requests.get(url,timeout = 5)
-          r.close()
-          domains = domains+r.json()["domains"]
-    self.domains = domains
-    return domains
+    try:
+      url = "http://dns.aizhan.com/index.php?r=index/domains&ip=%s&page=1" % (ip)
+      r = requests.get(url,timeout = 5)
+      r.close()
+      domains = (r.json()["domains"])
+      maxpage = r.json()["maxpage"]
+      if maxpage >= 2:
+          for i in range(2,maxpage+1):
+            url = "http://dns.aizhan.com/index.php?r=index/domains&ip=%s&page=%d" % (ip,i)
+            r = requests.get(url,timeout = 5)
+            r.close()
+            domains = domains+r.json()["domains"]
+      self.domains = domains
+      return domains
+    except Exception:
+      exit(0)
   
   
 def get_title(domain):
